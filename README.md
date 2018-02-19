@@ -2,6 +2,8 @@
 
 ```python
 import numpy as np
+import string
+from collections import OrderedDict
 ```
 
 # Playfair Cypher
@@ -12,7 +14,7 @@ In this notebook, the encoding and decoding techniques of the Playfair Cypher wi
 ```python
 def remove_spaces(str):
     ### This is a function that will remove all of the spaces from a string. 
-    return str.replace(' ', '')
+    return str.replace(' ', '').lower()
 ```
 
 
@@ -23,6 +25,7 @@ def remove_spaces_tests():
     assert(remove_spaces("test test") == "testtest")
     assert(remove_spaces("test test test") == "testtesttest")
     assert(remove_spaces(" test ") == "test")
+    assert(remove_spaces(" A B c D") == "abcd")
     
     print("All Tests Passed!")
     
@@ -37,7 +40,6 @@ Since spaces aren't relevent to the cyper, we should remove them from the input.
 
 
 ```python
-
 is_odd = False
 def check_length(str):
     global is_odd
@@ -63,6 +65,58 @@ def check_length_test():
     print("All Tests Passed!")
     
 check_length_test()
+```
+
+    All Tests Passed!
+
+
+The key also needs to not have repeats, so let's implement a function that removes the repeats from a string. 
+
+
+```python
+def remove_repeats(str):
+    str = str.replace("j", "i")
+    return "".join(OrderedDict.fromkeys(str))
+```
+
+
+```python
+def remove_repeats_test():
+    assert(remove_repeats("test") == "tes")
+    print("All Tests Passed!")
+remove_repeats_test()
+```
+
+    All Tests Passed!
+
+
+Now that all of our preprocessing tools have been implemented, it's time to begin implementing the encrypt function. Before that, however, it's necessary to set up our key. I'll implement this as a dictionary for both speed and ease of use. 
+
+
+```python
+key_array = []
+def define_key(key):
+    key = remove_repeats(remove_spaces(key))
+    global key_array
+    key_array = list(key)
+    
+    for i in list(string.ascii_lowercase):
+        if i not in key and i != ('j'):
+            key_array += i
+        
+        
+    return key_array
+```
+
+
+```python
+def define_key_tests():
+    test1 = define_key(" te s s t a")
+    assert(len(test1) == 25)
+    test2 = define_key("a b c d e f g h i j k l m n o p q r s t u v")
+    assert(len(test2) == 25)
+    print("All Tests Passed!")
+define_key_tests()
 ```
 
     All Tests Passed!
