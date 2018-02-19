@@ -90,7 +90,7 @@ remove_repeats_test()
     All Tests Passed!
 
 
-Now that all of our preprocessing tools have been implemented, it's time to begin implementing the encrypt function. Before that, however, it's necessary to set up our key. I'll implement this as a dictionary for both speed and ease of use. 
+Now that all of our preprocessing tools have been implemented, it's time to begin implementing the encrypt function. Before that, however, it's necessary to set up our key. I'll implement this as a list for both speed and ease of use. 
 
 
 ```python
@@ -103,8 +103,6 @@ def define_key(key):
     for i in list(string.ascii_lowercase):
         if i not in key and i != ('j'):
             key_array += i
-        
-        
     return key_array
 ```
 
@@ -121,3 +119,42 @@ define_key_tests()
 
     All Tests Passed!
 
+
+We, now, need to split the code into pairs, as that's how the code is interpreted. The following code is a list comprehension that splits a string into a list of pairs.
+
+
+```python
+def split_string(str):
+    ### "abcd = [(ab), (cd)]
+    return [''.join(t) for t in zip(*[iter(str)]*2)]
+```
+
+
+```python
+def split_string_test():
+    assert(split_string("ab") == ["ab"])
+    assert(split_string("abcd") == ["ab", "cd"])
+    print("All Tests Passed!")
+split_string_test()
+```
+
+    All Tests Passed!
+
+
+Now that we have a key implemented, our encryption and decryption function will essentially be math on the key list. Let's start with encryption. 
+
+
+```python
+def encrypt(key, code): 
+    ### There are three cases that we need to worry about for the encrypt function. 
+    ### 1) If the two letters in the pair that we are looking at are in the same column
+    ### 2) If the two letters in the pair that we are looking at are in the same row
+    ### 3) If the two letters in the pair that we are looking at are in different rows/columns and we need to draw a box
+    key = define_key(key)
+    code = check_length(remove_repeats(code))
+    code = split_string(code)
+    output_string = ""
+    return code
+
+    
+```
