@@ -2,7 +2,6 @@
 
 ```python
 import numpy as np
-
 ```
 
 # Playfair Cypher
@@ -42,13 +41,29 @@ Since spaces aren't relevent to the cyper, we should remove them from the input.
 is_odd = False
 def check_length(str):
     global is_odd
-    is_odd = (len(str) == 1)
-
+    is_odd = (len(str) % 2 == 1)
+    if is_odd:
+        return str + 'x'
+    return str
 ```
 
 
+```python
+def check_length_test():
+    global is_odd
+    assert(is_odd == False)
+    assert(check_length("j") == "jx")
+    assert(is_odd == True)
+    is_odd = False
+    assert(check_length("test") == "test")
+    assert(is_odd == False)
+    test_str = check_length(remove_spaces("t e s t 1 2 3"))
+    assert(test_str == "test123x")
+    assert(is_odd == True)
+    print("All Tests Passed!")
+    
+check_length_test()
+```
 
-
-    True
-
+    All Tests Passed!
 
