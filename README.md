@@ -28,8 +28,6 @@ def remove_spaces_tests():
     assert(remove_spaces(" A B c D") == "abcd")
     
     print("All Tests Passed!")
-    
-    
 remove_spaces_tests()
 ```
 
@@ -154,7 +152,38 @@ def encrypt(key, code):
     code = check_length(remove_repeats(code))
     code = split_string(code)
     output_string = ""
-    return code
+    for pairs in code:
+        first = pairs[0]
+        second = pairs[1]
+        first_counter = 1
+        second_counter = 1
+        for i in range(len(key) - 1):
+            if key[i] == first:
+                first_counter += i
+            elif key[i] == second:
+                second_counter += i
+        diff = abs(first_counter - second_counter)
+        if diff % 5 == 0:
+            if first_counter + 5 <= 25:
+                output_string += key[first_counter + 5]
+            else:
+                output_string += key[first_counter % 5]
+            if second_counter + 5 <= 25:
+                output_string += key[second_counter + 5]
+            else:
+                output_string += key[second_counter % 5]
+            continue
+        if diff < 5:
+            if (first_counter + 1) >= 5:
+                ouput_string += key[first_counter - 4]
+            else:
+                output_string += key[first_counter + 1]
+            if (second_counter + 1) >= 5:
+                ouput_string += key[second_counter - 4]
+            else:
+                second_string += key[second_counter + 1]
+                
+    return output_string
 
     
 ```
