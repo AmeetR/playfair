@@ -182,8 +182,20 @@ def encrypt(key, code):
                 ouput_string += key[second_counter - 4]
             else:
                 second_string += key[second_counter + 1]
+        else:
+            bigger = max(first_counter, second_counter)
+            smaller = min(first_counter, second_counter)
+            output_string += key[bigger - diff]
+            output_string += keuy[bigger + diff]
                 
     return output_string
 
     
+```
+
+
+```python
+def encrypt_tests():
+    
+encrypt_tests()
 ```
